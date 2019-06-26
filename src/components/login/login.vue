@@ -47,7 +47,7 @@
           }
           
         }
-      }
+      };
       var checkVerify = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入验证码'));
@@ -55,7 +55,7 @@
           
           callback();
         }
-      }
+      };
       return {
         btn: false,
         rueform: {
@@ -85,19 +85,19 @@
     },
     created() {
     },
-    // beforeMount() {
-    //   this.token = this.$utils.getCookie("token");
-    //   this.userId = this.$utils.getCookie("user_id");
-    //   if (this.token && this.userId) {
-    //     this.isShow = true;
-    //     this.loginBar(this.userId, this.token)
-    //   } else {
-    //     let AppId = "wxd182797f554d6b82";
-    //     let local = "https://rr-points.xinxicdn.com/login?dbredirect=%2F%2Factivity.m.duiba.com.cn%2Fchw%2Fvisual-editor%2Fskins%3Fid%3D24034"//window.location.href;
-    //     window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-    //   }
-    //   this.WXcode = this.getParameter('code');
-    // },
+    beforeMount() {
+      this.token = this.$utils.getCookie("token");
+      this.userId = this.$utils.getCookie("user_id");
+      if (this.token && this.userId) {
+        this.isShow = true;
+        this.loginBar(this.userId, this.token)
+      } else {
+        let AppId = "wxd182797f554d6b82";
+        let local = window.location.href;
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+      }
+      this.WXcode = this.getParameter('code');
+    },
     mounted() {
     },
     watch: {},
