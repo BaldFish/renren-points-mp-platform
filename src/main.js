@@ -11,8 +11,6 @@ import '@/common/stylus/index.styl';
 
 import 'lib-flexible'
 
-import '@/common/js/validate.js'
-
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 
