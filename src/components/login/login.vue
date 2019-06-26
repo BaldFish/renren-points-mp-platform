@@ -92,11 +92,14 @@
         this.isShow = true;
         this.loginBar(this.userId, this.token)
       } else {
-        let AppId = "wxd182797f554d6b82";
-        let local = window.location.href;
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        this.WXcode = this.getParameter('code');
+        if (this.WXcode === null || this.WXcode === "") {
+          let AppId = "wxd182797f554d6b82";
+          let local = window.location.href;
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        }
       }
-      this.WXcode = this.getParameter('code');
+      
     },
     mounted() {
     },
