@@ -60,9 +60,6 @@
       margin: 0 auto;
       width 100%
       min-width 640px
-      .main {
-        flex: 1;
-      }
     }
   }
 </style>
