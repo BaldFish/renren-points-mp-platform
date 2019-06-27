@@ -39,20 +39,17 @@
         if (value === '') {
           callback(new Error('请输入手机号'));
         } else {
-          console.log(reg.test(value));
           if (reg.test(value)) {
             callback();
           } else {
             callback(new Error('请输入正确手机号'));
           }
-          
         }
       };
       var checkVerify = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入验证码'));
         } else {
-          
           callback();
         }
       };
@@ -101,7 +98,7 @@
             let local = window.location.href;
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }
-          
+          this.turnAutoLogin();
         }
       } else {
         if (this.token && this.userId) {
@@ -164,6 +161,10 @@
           code: this.rueform.verify,//短信验证码
           weixin_code: this.WXcode,//微信用来获取openid的code
         };
+        this.$Indicator.open({
+          text: '登录中...',
+          spinnerType: 'triple-bounce'
+        });
         this.$axios({
           method: 'POST',
           url: `${this.$baseURL}/v1/rr-points/user/login`,
@@ -178,7 +179,14 @@
           this.$utils.setCookie('openid', res.data.data.openid);
           this.loginBar(res.data.data.user_id, res.data.data.token)
         }).catch(error => {
-          console.log(error);
+          this.$utils.unsetCookie('session_id');
+          this.$utils.unsetCookie('token');
+          this.$utils.unsetCookie('user_id');
+          this.$utils.unsetCookie('phone');
+          this.$utils.unsetCookie('head_img');
+          this.$utils.unsetCookie('nick_name');
+          this.$utils.unsetCookie('openid');
+          this.$Indicator.close();
           this.$router.push('/login');
         })
       },
@@ -195,7 +203,41 @@
             'X-Access-Token': token,
           }
         }).then(res => {
+          this.$Indicator.close();
           window.location.href = res.data.url
+        }).catch(error => {
+          this.$utils.unsetCookie('session_id');
+          this.$utils.unsetCookie('token');
+          this.$utils.unsetCookie('user_id');
+          this.$utils.unsetCookie('phone');
+          this.$utils.unsetCookie('head_img');
+          this.$utils.unsetCookie('nick_name');
+          this.$utils.unsetCookie('openid');
+          this.$Indicator.close();
+          this.$router.push('/login');
+        })
+      },
+      //外部公众号跳转至积分商城并自动登录
+      turnAutoLogin(){
+        let data = {
+          phone: this.getParameter('phone'),//用户手机号，无+86前缀
+          apikey: this.getParameter('apikey'),//区块链分配给各接入方的API KEY
+          timestamp: this.getParameter('timestamp'),//时间毫秒数，10进制，5min有效
+          sign: this.getParameter('sign'),//签名值
+        };
+        this.$axios({
+          method: 'POST',
+          url: `${this.$baseURL}/login`,
+          data: this.$querystring.stringify(data)
+        }).then(res => {
+          this.$utils.setCookie('session_id', res.data.data.session_id);
+          this.$utils.setCookie('token', res.data.data.token);
+          this.$utils.setCookie('user_id', res.data.data.user_id);
+          this.$utils.setCookie('phone', res.data.data.phone);
+          this.$utils.setCookie('head_img', res.data.data.head_img);
+          this.$utils.setCookie('nick_name', res.data.data.nick_name);
+          this.$utils.setCookie('openid', res.data.data.openid);
+          this.loginBar(res.data.data.user_id, res.data.data.token)
         }).catch(error => {
           this.$utils.unsetCookie('session_id');
           this.$utils.unsetCookie('token');

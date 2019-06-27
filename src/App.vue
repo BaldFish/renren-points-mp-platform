@@ -47,12 +47,13 @@
   }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
   #app {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
+    
     .main_wrap {
       display: flex;
       flex: 1;
@@ -60,6 +61,23 @@
       margin: 0 auto;
       width 100%
       min-width 640px
+    }
+  }
+  
+  .mint-indicator {
+    .mint-indicator-wrapper {
+      .mint-indicator-spin{
+        .mint-spinner-fading-circle{
+          width 50px!important
+          height 50px!important
+        }
+      }
+      .mint-indicator-text{
+        font-size 30px!important
+      }
+    }
+    
+    .mint-indicator-mask {
     }
   }
 </style>
