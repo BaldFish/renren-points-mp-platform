@@ -42,13 +42,13 @@
             'X-Access-Token': token,
           }
         }).then(res => {
-          this.$utils.setCookie('session_id', res.data.data.session_id);
-          this.$utils.setCookie('token', res.data.data.token);
-          this.$utils.setCookie('user_id', res.data.data.user_id);
-          this.$utils.setCookie('phone', res.data.data.phone);
-          this.$utils.setCookie('head_img', res.data.data.head_img);
-          this.$utils.setCookie('nick_name', res.data.data.nick_name);
-          this.$utils.setCookie('openid', res.data.data.openid);
+          this.$utils.unsetCookie('session_id');
+          this.$utils.unsetCookie('token');
+          this.$utils.unsetCookie('user_id');
+          this.$utils.unsetCookie('phone');
+          this.$utils.unsetCookie('head_img');
+          this.$utils.unsetCookie('nick_name');
+          this.$utils.unsetCookie('openid');
           this.errorMessage = "注销成功！";
           this.errorTip = true;
           window.setTimeout(() => {
@@ -56,13 +56,13 @@
             this.$router.push("/login")
           }, 1500)
         }).catch(error => {
-          this.$utils.setCookie('session_id', res.data.data.session_id);
-          this.$utils.setCookie('token', res.data.data.token);
-          this.$utils.setCookie('user_id', res.data.data.user_id);
-          this.$utils.setCookie('phone', res.data.data.phone);
-          this.$utils.setCookie('head_img', res.data.data.head_img);
-          this.$utils.setCookie('nick_name', res.data.data.nick_name);
-          this.$utils.setCookie('openid', res.data.data.openid);
+          this.$utils.unsetCookie('session_id');
+          this.$utils.unsetCookie('token');
+          this.$utils.unsetCookie('user_id');
+          this.$utils.unsetCookie('phone');
+          this.$utils.unsetCookie('head_img');
+          this.$utils.unsetCookie('nick_name');
+          this.$utils.unsetCookie('openid');
           this.errorMessage = "注销成功！";
           this.errorTip = true;
           window.setTimeout(() => {
