@@ -187,7 +187,12 @@
           this.$utils.unsetCookie('nick_name');
           this.$utils.unsetCookie('openid');
           this.$Indicator.close();
-          this.$router.push('/login');
+          this.errorMessage = error.response.data.message;
+          this.errorTip = true;
+          window.setTimeout(() => {
+            this.errorTip = false;
+            this.$router.push("/login")
+          }, 1500);
         })
       },
       //自动登录+重定向兑吧
