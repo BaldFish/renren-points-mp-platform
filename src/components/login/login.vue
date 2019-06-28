@@ -229,10 +229,13 @@
           apikey: this.getParameter('apikey'),//区块链分配给各接入方的API KEY
           timestamp: this.getParameter('timestamp'),//时间毫秒数，10进制，5min有效
           sign: this.getParameter('sign'),//签名值
+          weixin_code: this.WXcode,//微信用来获取openid的code
+          code:"",//手机验证码
+          
         };
         this.$axios({
           method: 'POST',
-          url: `${this.$baseURL}/login`,
+          url: `${this.$baseURL}/v1/rr-points/user/login`,
           data: this.$querystring.stringify(data)
         }).then(res => {
           this.$utils.setCookie('session_id', res.data.data.session_id);
