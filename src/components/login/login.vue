@@ -97,12 +97,14 @@
         } else {
           window.alert('1-2')
           this.WXcode = this.getParameter('code');
+          console.log(this.WXcode)
           if (this.WXcode === null || this.WXcode === "") {
-            window.alert('1-2')
+            window.alert('1-3')
             let AppId = "wxd182797f554d6b82";
             let local = window.location.href;
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }
+          window.alert('1-4')
           this.turnAutoLogin();
         }
       } else {
@@ -169,9 +171,9 @@
           phone: "+86" + this.rueform.phone,//手机号
           code: this.rueform.verify,//短信验证码
           weixin_code: this.WXcode,//微信用来获取openid的code
-          apikey:"",//区块链分配给各接入方的API KEY
-          timestamp:"",//时间毫秒数，10进制，5min有效
-          sign:"",//签名值
+          apikey: "",//区块链分配给各接入方的API KEY
+          timestamp: "",//时间毫秒数，10进制，5min有效
+          sign: "",//签名值
         };
         this.$Indicator.open({
           text: '登录中...',
@@ -235,14 +237,14 @@
         })
       },
       //外部公众号跳转至积分商城并自动登录
-      turnAutoLogin(){
+      turnAutoLogin() {
         let data = {
           phone: this.getParameter('phone'),//用户手机号，无+86前缀
           apikey: this.getParameter('apikey'),//区块链分配给各接入方的API KEY
           timestamp: this.getParameter('timestamp'),//时间毫秒数，10进制，5min有效
           sign: this.getParameter('sign'),//签名值
           weixin_code: this.WXcode,//微信用来获取openid的code
-          code:"",//手机验证码
+          code: "",//手机验证码
           
         };
         this.$axios({
