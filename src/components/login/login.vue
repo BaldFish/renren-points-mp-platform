@@ -88,17 +88,12 @@
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
       if (this.getParameter('phone')) {
-        window.alert('1')
         let phone = this.getParameter('phone');
         if (phone === this.phone) {
-          window.alert('1-1')
           this.loginBar(this.userId, this.token)
         } else {
-          window.alert('1-2')
           this.WXcode = this.getParameter('code');
-          window.alert(this.WXcode)
           if (this.WXcode === null || this.WXcode === "") {
-            window.alert('1-3')
             let AppId = "wxd182797f554d6b82";
             let local = window.location.href;
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
@@ -107,16 +102,12 @@
           }
         }
       } else {
-        window.alert('2')
         if (this.token && this.userId) {
-          window.alert('2-1')
           this.isShow = true;
           this.loginBar(this.userId, this.token)
         } else {
-          window.alert('2-2')
           this.WXcode = this.getParameter('code');
           if (this.WXcode === null || this.WXcode === "") {
-            window.alert('2-3')
             let AppId = "wxd182797f554d6b82";
             let local = window.location.href;
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
@@ -258,10 +249,8 @@
           this.$utils.setCookie('head_img', res.data.data.head_img);
           this.$utils.setCookie('nick_name', res.data.data.nick_name);
           this.$utils.setCookie('openid', res.data.data.openid);
-          window.alert(res.data.data)
           this.loginBar(res.data.data.user_id, res.data.data.token)
         }).catch(error => {
-          window.alert(error.response.data.message)
           this.$utils.unsetCookie('session_id');
           this.$utils.unsetCookie('token');
           this.$utils.unsetCookie('user_id');
