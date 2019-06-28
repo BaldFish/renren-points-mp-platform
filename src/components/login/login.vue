@@ -97,7 +97,7 @@
         } else {
           window.alert('1-2')
           this.WXcode = this.getParameter('code');
-          console.log(this.WXcode)
+          window.alert(this.WXcode)
           if (this.WXcode === null || this.WXcode === "") {
             window.alert('1-3')
             let AppId = "wxd182797f554d6b82";
