@@ -160,6 +160,9 @@
           phone: "+86" + this.rueform.phone,//手机号
           code: this.rueform.verify,//短信验证码
           weixin_code: this.WXcode,//微信用来获取openid的code
+          apikey:"",//区块链分配给各接入方的API KEY
+          timestamp:"",//时间毫秒数，10进制，5min有效
+          sign:"",//签名值
         };
         this.$Indicator.open({
           text: '登录中...',
