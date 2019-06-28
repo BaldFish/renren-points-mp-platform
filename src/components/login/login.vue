@@ -88,6 +88,7 @@
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
       if (this.getParameter('phone')) {
+        this.isShow = true;
         let phone = this.getParameter('phone');
         if (phone === this.phone) {
           this.loginBar(this.userId, this.token)
@@ -97,7 +98,7 @@
             let AppId = "wxd182797f554d6b82";
             let local = window.location.href;
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-          }else{
+          } else {
             this.turnAutoLogin();
           }
         }
@@ -378,13 +379,14 @@
         }
       }
     }
+    
     .errorTip_wrap {
       width 100%
       text-align center
       font-size 0
       position fixed
       top 50%
-    
+      
       .errorTip {
         display inline-block
         box-sizing border-box
