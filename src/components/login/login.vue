@@ -259,8 +259,10 @@
           this.$utils.setCookie('head_img', res.data.data.head_img);
           this.$utils.setCookie('nick_name', res.data.data.nick_name);
           this.$utils.setCookie('openid', res.data.data.openid);
+          window.alert(res.data.data)
           this.loginBar(res.data.data.user_id, res.data.data.token)
         }).catch(error => {
+          window.alert(error.response.data.message)
           this.$utils.unsetCookie('session_id');
           this.$utils.unsetCookie('token');
           this.$utils.unsetCookie('user_id');
