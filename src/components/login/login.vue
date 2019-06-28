@@ -389,6 +389,26 @@
         }
       }
     }
+    .errorTip_wrap {
+      width 100%
+      text-align center
+      font-size 0
+      position fixed
+      top 50%
+    
+      .errorTip {
+        display inline-block
+        box-sizing border-box
+        line-height 1.6
+        max-width 520px;
+        padding 20px 30px
+        background-color #000000
+        opacity 0.7
+        font-size 30px; /*px*/
+        color #ffffff
+        border-radius 30px
+      }
+    }
   }
   
   /*no*/
