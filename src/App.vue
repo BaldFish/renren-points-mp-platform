@@ -33,7 +33,6 @@
     watch: {
       //监听路由变化执行方法
       $route(to, from) {
-        //this.getPath();
       }
     },
     methods: {

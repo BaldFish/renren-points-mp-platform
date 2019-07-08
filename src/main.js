@@ -54,12 +54,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
-import Indicator from 'mint-ui/lib/indicator';
-import 'mint-ui/lib/indicator/style.css';
-Vue.use(Indicator);
-
-Vue.prototype.$Indicator = Indicator;
-
 import { Loading } from 'vant';
 Vue.use(Loading);
 

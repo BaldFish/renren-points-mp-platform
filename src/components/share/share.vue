@@ -1,6 +1,6 @@
 <template>
   <div class="share">
-    share
+    <van-loading size="24px" class="loading">加载中...</van-loading>
   </div>
 </template>
 
