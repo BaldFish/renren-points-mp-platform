@@ -1,6 +1,7 @@
 <template>
   <div class="share">
-    share
+    <van-loading />
+    <van-loading type="spinner" />
   </div>
 </template>
 
