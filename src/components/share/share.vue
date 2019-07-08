@@ -1,7 +1,6 @@
 <template>
   <div class="share">
-    <van-loading />
-    <van-loading type="spinner" />
+    <van-loading size="24px" class="loading">加载中...</van-loading>
   </div>
 </template>
 

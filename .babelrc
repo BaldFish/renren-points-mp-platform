@@ -1,12 +1,6 @@
 {
   "presets": [
     [
-      "es2015",
-      {
-        "modules": false
-      }
-    ],
-    [
       "env",
       {
         "modules": false,
@@ -23,6 +17,16 @@
   ],
   "plugins": [
     "transform-vue-jsx",
-    "transform-runtime"
+    "transform-runtime",
+    [
+      "import",
+      [
+        {
+          "libraryName": "vant",
+          "libraryDirectory": "es",
+          "style": true
+        }
+      ]
+    ]
   ]
 }
