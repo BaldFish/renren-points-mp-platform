@@ -54,9 +54,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
-import { Loading } from 'vant';
-Vue.use(Loading);
-
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 const store = new Vuex.Store({
