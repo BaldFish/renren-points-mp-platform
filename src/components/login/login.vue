@@ -83,39 +83,39 @@
     },
     created() {
     },
-    beforeMount() {
-      this.token = this.$utils.getCookie("token");
-      this.userId = this.$utils.getCookie("user_id");
-      this.phone = this.$utils.getCookie("phone");
-      if (this.getParameter('phone')) {
-        this.isShow = true;
-        let phone = this.getParameter('phone');
-        if (phone === this.phone) {
-          this.loginBar(this.userId, this.token)
-        } else {
-          this.WXcode = this.getParameter('code');
-          if (this.WXcode === null || this.WXcode === "") {
-            let AppId = "wxd182797f554d6b82";
-            let local = window.location.href;
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-          } else {
-            this.turnAutoLogin();
-          }
-        }
-      } else {
-        if (this.token && this.userId) {
-          this.isShow = true;
-          this.loginBar(this.userId, this.token)
-        } else {
-          this.WXcode = this.getParameter('code');
-          if (this.WXcode === null || this.WXcode === "") {
-            let AppId = "wxd182797f554d6b82";
-            let local = window.location.href;
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-          }
-        }
-      }
-    },
+    // beforeMount() {
+    //   this.token = this.$utils.getCookie("token");
+    //   this.userId = this.$utils.getCookie("user_id");
+    //   this.phone = this.$utils.getCookie("phone");
+    //   if (this.getParameter('phone')) {
+    //     this.isShow = true;
+    //     let phone = this.getParameter('phone');
+    //     if (phone === this.phone) {
+    //       this.loginBar(this.userId, this.token)
+    //     } else {
+    //       this.WXcode = this.getParameter('code');
+    //       if (this.WXcode === null || this.WXcode === "") {
+    //         let AppId = "wxd182797f554d6b82";
+    //         let local = window.location.href;
+    //         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+    //       } else {
+    //         this.turnAutoLogin();
+    //       }
+    //     }
+    //   } else {
+    //     if (this.token && this.userId) {
+    //       this.isShow = true;
+    //       this.loginBar(this.userId, this.token)
+    //     } else {
+    //       this.WXcode = this.getParameter('code');
+    //       if (this.WXcode === null || this.WXcode === "") {
+    //         let AppId = "wxd182797f554d6b82";
+    //         let local = window.location.href;
+    //         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+    //       }
+    //     }
+    //   }
+    // },
     mounted() {
     },
     watch: {},
