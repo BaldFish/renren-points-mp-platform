@@ -49,10 +49,10 @@ import VueScroller from 'vue-scroller';
 
 Vue.use(VueScroller);
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.use(ElementUI);
+import {Input, Form, FormItem,} from 'element-ui';
+Vue.use(Input);
+Vue.use(Form);
+Vue.use(FormItem);
 
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
