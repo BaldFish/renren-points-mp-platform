@@ -14,6 +14,7 @@
     created() {
     },
     beforeMount() {
+      this.$utils.setTitle("新人注册");
     },
     mounted() {
     },

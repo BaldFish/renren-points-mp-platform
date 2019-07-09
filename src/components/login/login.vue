@@ -83,7 +83,7 @@
     },
     created() {
     },
-    beforeMount() {
+    /*beforeMount() {
       this.token = this.$utils.getCookie("token");
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
@@ -115,7 +115,7 @@
           }
         }
       }
-    },
+    },*/
     mounted() {
     },
     watch: {},

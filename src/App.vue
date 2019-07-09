@@ -26,6 +26,7 @@
     beforeMount() {
     },
     mounted() {
+      this.$utils.solveInputBug();
     },
     beforeUpdate() {
     },
