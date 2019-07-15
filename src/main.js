@@ -55,6 +55,10 @@ Vue.use(Input);
 Vue.use(Form);
 Vue.use(FormItem);
 
+import { Indicator } from 'mint-ui';
+Vue.use(Indicator);
+Vue.prototype.$Indicator = Indicator;
+
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 const store = new Vuex.Store({
