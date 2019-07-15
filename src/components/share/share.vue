@@ -254,38 +254,29 @@
     
     .swiper_out {
       .rewards_in {
-        width: 660px;
-        //height: 240px;
-        background-color: #ffffff;
-        border-radius: 25px;
-        border: solid 1px #ffffff; /*no*/
         padding-top 10px
         padding-bottom 10px
-        display flex
-        align-items center
-        justify-content center
+        justify-content left
         
         .case_wrap {
-          //width 750px
           height 126px
-          margin 0 auto
           position relative
-          /*margin-top 40px*/
           
           .case_swiper {
             height 126px
-            
+            line-height 42px
             .swiper-wrapper {
-              //width 750px
               height 42px
               line-height 42px
               font-size 24px
-              color: #333;
-              display flex
-              align-items center
+              color: #666666;
               img {
+                vertical-align middle
                 margin-left 36px
                 margin-right 20px
+              }
+              span{
+                color: #333333;
               }
             }
           }
