@@ -52,15 +52,16 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items center
     background-color: #ffffff;
     
     .main_wrap {
+      width 100%
+      min-width 640px
       display: flex;
       flex: 1;
       box-sizing: border-box;
-      margin: 0 auto;
-      width 100%
-      min-width 640px
+      justify-content center
     }
   }
   

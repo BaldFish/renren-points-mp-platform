@@ -9,7 +9,8 @@ Vue.use(Vuex);
 
 import '@/common/stylus/index.styl';
 
-import 'lib-flexible'
+//import 'lib-flexible'
+import '@/common/js/flexible.js'
 
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
