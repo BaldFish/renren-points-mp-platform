@@ -279,6 +279,7 @@
         }
         
         .send {
+          font-size 24px
           width: 160px;
           height: 58px;
           line-height 58px
@@ -289,6 +290,7 @@
         }
         
         .time {
+          font-size 24px
           width: 160px;
           height: 58px;
           line-height 58px
