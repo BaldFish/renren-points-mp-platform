@@ -4,19 +4,19 @@
       <img src="../../common/images/bj_share_text.png" alt="">
     </div>
     <div class="btn">
-      <img src="../../common/images/invite.png" alt="">
+      <img src="../../common/images/invite.png" alt="" @click="turnShareHint">
     </div>
     <div class="title_wrap">我的奖励</div>
     <div class="rewards_out">
       <div class="rewards_in">
         <div class="in_left">
           <div class="in_left_top">已获得奖励</div>
-          <div class="in_left_bottom">100</div>
+          <div class="in_left_bottom">{{reward.award_value}}</div>
         </div>
         <div class="in_middle"></div>
         <div class="in_right">
           <div class="in_right_top">已邀请好友</div>
-          <div class="in_right_bottom">4</div>
+          <div class="in_right_bottom">{{reward.invite_count}}</div>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
         <div class="case_wrap">
           <swiper :options="caseOption" class="case_swiper" ref="caseOption">
             <swiper-slide v-for="(slide, index) in caseOption.slides" :key="index" v-if="caseOption.slides.length">
-              <img src="../../common/images/tongzhi.png" alt="">用户：{{slide.name}} 刚刚获得<span>{{slide.num}}</span>积分奖励
+              <img src="../../common/images/tongzhi.png" alt="">用户：{{slide.nickname}} 刚刚获得<span>{{slide.value}}</span>积分奖励
             </swiper-slide>
             <!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
           </swiper>
@@ -68,31 +68,38 @@
     components: {},
     data() {
       return {
+        token: "",
+        userId: "",
+        phone: "",
         caseOption: {
           pagination: {
             el: '.swiper-pagination'
           },
-          slides: [{
-            name: "张三",
-            num: "60"
+          slides: [/*{
+            "nickname": "筱笠",
+            "value": 5
           },
             {
-              name: "李四",
-              num: "50"
+              "nickname": "若尘",
+              "value": 20
             },
             {
-              name: "王五",
-              num: "40"
-            }],
+              "nickname": "走吧",
+              "value": 53
+            }*/],
           autoplay: {
-            delay: 5000,
+            delay: 1000,
             stopOnLastSlide: false,
             disableOnInteraction: false,
           },
-          loop: true,
           direction: 'vertical',
           effect: '',
           slidesPerView: 3,
+          //loop: true,
+        },
+        reward: {
+          award_value:0,
+          invite_count:0
         },
       }
     },
@@ -100,12 +107,54 @@
     },
     beforeMount() {
       this.$utils.setTitle("邀新人注册");
+      this.token = this.$utils.getCookie("token");
+      this.userId = this.$utils.getCookie("user_id");
+      this.phone = this.$utils.getCookie("phone");
+      /*if (this.token && this.userId) {
+        this.getReward();
+        this.getRewardRank();
+      } else {
+        this.$router.push("/login");
+      }*/
+      
     },
     mounted() {
+      this.getReward();
+      this.getRewardRank();
     },
     watch: {},
     computed: {},
-    methods: {},
+    methods: {
+      //跳转分享提示页
+      turnShareHint() {
+        this.$router.push("/shareHint")
+      },
+      //获取用户邀请奖励
+      getReward() {
+        this.$axios({
+          method: "GET",
+          url: `${this.$baseURL}/v1/rr-points/user/reward/${this.userId}`,
+          headers: {
+            'X-Access-Token': this.token,
+          }
+        }).then(res => {
+          this.reward = res.data.data
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+      //获取奖励排行
+      getRewardRank() {
+        this.$axios({
+          method: "GET",
+          url: `${this.$baseURL}/v1/rr-points/user/rank/reward`,
+        }).then(res => {
+          this.caseOption.slides = res.data.data
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+    },
   }
 </script>
 
@@ -265,17 +314,20 @@
           .case_swiper {
             height 126px
             line-height 42px
+            
             .swiper-wrapper {
               height 42px
               line-height 42px
               font-size 24px
               color: #666666;
+              
               img {
                 vertical-align middle
                 margin-left 36px
                 margin-right 20px
               }
-              span{
+              
+              span {
                 color: #333333;
               }
             }

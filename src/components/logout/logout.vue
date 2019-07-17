@@ -4,8 +4,8 @@
       <p>注销当前账户？</p>
       <span @click="logout" class="logout-btn">确定</span>
     </div>
-    <div class="errorTip_wrap">
-      <div class="errorTip" v-if="errorTip">{{errorMessage}}</div>
+    <div class="errorTip_wrap" v-if="errorTip">
+      <div class="errorTip">{{errorMessage}}</div>
     </div>
   </div>
 </template>
@@ -124,14 +124,15 @@
 
     .errorTip_wrap {
       width 100%
-      text-align center
-      font-size 0
+      height 100%
       position fixed
-      top 50%
-
+      left 0
+      top 0
+      display flex
+      align-items center
+      justify-content center
+    
       .errorTip {
-        display inline-block
-        box-sizing border-box
         line-height 1.6
         max-width 520px;
         padding 20px 30px

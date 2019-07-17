@@ -1,5 +1,5 @@
 <template>
-  <div class="login" :class="{'hide':isShow}">
+  <div class="login" :class="{'hide':isHide}">
     <div class="container">
       <div class="content">
         <h4>登录/注册</h4>
@@ -22,8 +22,8 @@
         <span @click="login" class="login-btn">登录</span>
       </div>
     </div>
-    <div class="errorTip_wrap">
-      <div class="errorTip" v-if="errorTip">{{errorMessage}}</div>
+    <div class="errorTip_wrap" v-if="errorTip">
+      <div class="errorTip">{{errorMessage}}</div>
     </div>
   </div>
 </template>
@@ -73,7 +73,7 @@
         intervalCode: null,
         getCheckTime: 0, // 验证码时间
         WXcode: "",
-        isShow: false,
+        isHide: false,
         token: "",
         userId: "",
         phone: "",
@@ -88,7 +88,7 @@
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
       if (this.getParameter('phone')) {
-        this.isShow = true;
+        this.isHide = true;
         let phone = this.getParameter('phone');
         if (phone === this.phone) {
           this.loginBar(this.userId, this.token)
@@ -104,7 +104,7 @@
         }
       } else {
         if (this.token && this.userId) {
-          this.isShow = true;
+          this.isHide = true;
           this.loginBar(this.userId, this.token)
         } else {
           this.WXcode = this.getParameter('code');
@@ -133,7 +133,7 @@
       },
       //发送验证码
       sendCodeTime() {
-        if (this.rueform.phone && /^[1][3,4,5,7,8][0-9]{9}$/.test(this.rueform.phone)) {
+        if (this.rueform.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.rueform.phone)) {
           // 开始倒计时
           this.getCheckTime = 60;
           this.intervalCode = setInterval(() => {
@@ -382,14 +382,15 @@
     
     .errorTip_wrap {
       width 100%
-      text-align center
-      font-size 0
+      height 100%
       position fixed
-      top 50%
-      
+      left 0
+      top 0
+      display flex
+      align-items center
+      justify-content center
+    
       .errorTip {
-        display inline-block
-        box-sizing border-box
         line-height 1.6
         max-width 520px;
         padding 20px 30px
