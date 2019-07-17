@@ -88,14 +88,14 @@
               "value": 53
             }*/],
           autoplay: {
-            delay: 1000,
+            delay: 5000,
             stopOnLastSlide: false,
             disableOnInteraction: false,
           },
           direction: 'vertical',
           effect: '',
           slidesPerView: 3,
-          //loop: true,
+          loop: true,
         },
         reward: {
           award_value:0,
@@ -110,12 +110,12 @@
       this.token = this.$utils.getCookie("token");
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
-      /*if (this.token && this.userId) {
+      if (this.token && this.userId) {
         this.getReward();
         this.getRewardRank();
       } else {
         this.$router.push("/login");
-      }*/
+      }
       
     },
     mounted() {
