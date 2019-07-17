@@ -51,8 +51,10 @@
     .btn{
       width 220px
       height 70px
-      background: url(../../common/images/cancel.png) center center no-repeat
-      background-size: 100% 100%;
+      img{
+        width 100%
+        height 100%
+      }
     }
   }
 </style>

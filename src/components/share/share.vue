@@ -322,6 +322,8 @@
               color: #666666;
               
               img {
+                width 24px
+                height 24px
                 vertical-align middle
                 margin-left 36px
                 margin-right 20px
