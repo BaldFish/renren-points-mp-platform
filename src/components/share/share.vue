@@ -23,10 +23,10 @@
     <div class="title_wrap">奖励排行</div>
     <div class="rewards_out swiper_out">
       <div class="rewards_in">
-        <div class="case_wrap">
-          <swiper :options="caseOption" class="case_swiper" ref="caseOption">
-            <swiper-slide v-for="(slide, index) in caseOption.slides" :key="index" v-if="caseOption.slides.length">
-              <img src="../../common/images/tongzhi.png" alt="">用户：{{slide.nickname}} 刚刚获得<span>{{slide.value}}</span>积分奖励
+        <div class="rank_wrap">
+          <swiper :options="rankOption" class="rank_swiper" ref="rankOption">
+            <swiper-slide v-for="(item, index) in rankList" :key="index">
+              <img src="../../common/images/tongzhi.png" alt="">用户：{{item.nickname}} 刚刚获得<span>{{item.value}}</span>积分奖励
             </swiper-slide>
             <!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
           </swiper>
@@ -71,31 +71,18 @@
         token: "",
         userId: "",
         phone: "",
-        caseOption: {
-          pagination: {
-            el: '.swiper-pagination'
-          },
-          slides: [/*{
-            "nickname": "筱笠",
-            "value": 5
-          },
-            {
-              "nickname": "若尘",
-              "value": 20
-            },
-            {
-              "nickname": "走吧",
-              "value": 53
-            }*/],
+        rankList:[],
+        rankOption: {
+          init:false,
+          loop: true,
           autoplay: {
-            delay: 5000,
+            delay: 1000,
             stopOnLastSlide: false,
             disableOnInteraction: false,
           },
+          effect: 'slide',
           direction: 'vertical',
-          effect: '',
-          slidesPerView: 3,
-          loop: true,
+          slidesPerView : 3,
         },
         reward: {
           award_value:0,
@@ -110,20 +97,29 @@
       this.token = this.$utils.getCookie("token");
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
-      if (this.token && this.userId) {
-        this.getReward();
-        this.getRewardRank();
-      } else {
-        this.$router.push("/login");
-      }
+      // if (this.token && this.userId) {
+      //   this.getReward();
+      //   this.getRewardRank();
+      // } else {
+      //   this.$router.push("/login");
+      // }
       
     },
     mounted() {
       this.getReward();
       this.getRewardRank();
     },
+    updated(){
+      if (this.rankList.length>0) {
+        this.rankDom.init();
+      }
+    },
     watch: {},
-    computed: {},
+    computed: {
+      rankDom:function() {
+        return this.$refs.rankOption.swiper;
+      }
+    },
     methods: {
       //跳转分享提示页
       turnShareHint() {
@@ -149,7 +145,7 @@
           method: "GET",
           url: `${this.$baseURL}/v1/rr-points/user/rank/reward`,
         }).then(res => {
-          this.caseOption.slides = res.data.data
+          this.rankList = res.data.data;
         }).catch(error => {
           console.log(error)
         })
@@ -307,11 +303,11 @@
         padding-bottom 10px
         justify-content left
         
-        .case_wrap {
+        .rank_wrap {
           height 126px
           position relative
           
-          .case_swiper {
+          .rank_swiper {
             height 126px
             line-height 42px
             
