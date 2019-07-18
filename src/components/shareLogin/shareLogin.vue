@@ -3,14 +3,14 @@
     <div class="login_wrap">
       <div class="login_title">新人注册</div>
       <div class="phone_wrap">
-        <input type="number" ma v-model="phone" placeholder="请输入您的手机号">
+        <input type="text" autocomplete="off" v-model="phone" placeholder="请输入您的手机号" maxlength="11">
       </div>
       <div class="code_wrap">
-        <input type="number" v-model="code" placeholder="请输入您的验证码">
+        <input type="text" autocomplete="off" v-model="code" placeholder="请输入您的验证码" maxlength="4">
         <span class="send" v-show="getCheckTime <= 0" @click="sendCodeTime">发送验证码</span>
         <span class="time" v-show="getCheckTime > 0">{{getCheckTime}}s后重发</span>
       </div>
-      <div class="login_btn">立即注册</div>
+      <div class="login_btn" @click="login">立即注册</div>
     </div>
     <div class="login_tips">
       <h2>什么是人人积分商城 <span>？</span></h2>
@@ -59,8 +59,20 @@
       }
     },
     mounted() {
+    
     },
-    watch: {},
+    watch: {
+      phone: function (val) {
+        if (this.phone&&!/^[0-9]+$/.test(val)) {
+          this.phone = this.phone.slice(0, this.phone.length - 1)
+        }
+      },
+      code:function (val) {
+        if (this.code&&!/^[0-9]+$/.test(val)) {
+          this.code = this.code.slice(0, this.code.length - 1)
+        }
+      }
+    },
     computed: {},
     methods: {
       //发送验证码
@@ -96,47 +108,56 @@
       },
       //免密注册登录
       login() {
-        let loginFormData = {
-          phone: this.phone,//手机号
-          code: this.code,//短信验证码
-          weixin_code: this.WXcode,//微信用来获取openid的code
-          apikey: "",//区块链分配给各接入方的API KEY
-          timestamp: "",//时间毫秒数，10进制，5min有效
-          sign: "",//签名值
-        };
-        this.$Indicator.open({
-          text: '登录中...',
-          spinnerType: 'triple-bounce'
-        });
-        this.$axios({
-          method: 'POST',
-          url: `${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.intervalCode}`,
-          data: this.$querystring.stringify(loginFormData)
-        }).then(res => {
-          this.$utils.setCookie('session_id', res.data.data.session_id);
-          this.$utils.setCookie('token', res.data.data.token);
-          this.$utils.setCookie('user_id', res.data.data.user_id);
-          this.$utils.setCookie('phone', res.data.data.phone);
-          this.$utils.setCookie('head_img', res.data.data.head_img);
-          this.$utils.setCookie('nick_name', res.data.data.nick_name);
-          this.$utils.setCookie('openid', res.data.data.openid);
-          this.loginBar(res.data.data.user_id, res.data.data.token)
-        }).catch(error => {
-          this.$utils.unsetCookie('session_id');
-          this.$utils.unsetCookie('token');
-          this.$utils.unsetCookie('user_id');
-          this.$utils.unsetCookie('phone');
-          this.$utils.unsetCookie('head_img');
-          this.$utils.unsetCookie('nick_name');
-          this.$utils.unsetCookie('openid');
-          this.$Indicator.close();
-          this.errorMessage = error.response.data.message;
+        if(this.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone)&&this.code&&/^[0-9]{4}$/.test(this.code)){
+          let loginFormData = {
+            phone: this.phone,//手机号
+            code: this.code,//短信验证码
+            weixin_code: this.WXcode,//微信用来获取openid的code
+            apikey: "",//区块链分配给各接入方的API KEY
+            timestamp: "",//时间毫秒数，10进制，5min有效
+            sign: "",//签名值
+          };
+          this.$Indicator.open({
+            text: '登录中...',
+            spinnerType: 'triple-bounce'
+          });
+          this.$axios({
+            method: 'POST',
+            url: `${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.intervalCode}`,
+            data: this.$querystring.stringify(loginFormData)
+          }).then(res => {
+            this.$utils.setCookie('session_id', res.data.data.session_id);
+            this.$utils.setCookie('token', res.data.data.token);
+            this.$utils.setCookie('user_id', res.data.data.user_id);
+            this.$utils.setCookie('phone', res.data.data.phone);
+            this.$utils.setCookie('head_img', res.data.data.head_img);
+            this.$utils.setCookie('nick_name', res.data.data.nick_name);
+            this.$utils.setCookie('openid', res.data.data.openid);
+            this.loginBar(res.data.data.user_id, res.data.data.token)
+          }).catch(error => {
+            this.$utils.unsetCookie('session_id');
+            this.$utils.unsetCookie('token');
+            this.$utils.unsetCookie('user_id');
+            this.$utils.unsetCookie('phone');
+            this.$utils.unsetCookie('head_img');
+            this.$utils.unsetCookie('nick_name');
+            this.$utils.unsetCookie('openid');
+            this.$Indicator.close();
+            this.errorMessage = error.response.data.message;
+            this.errorTip = true;
+            window.setTimeout(() => {
+              this.errorTip = false;
+              this.$router.push(`/shareLogin?intervalCode=${this.intervalCode}`)
+            }, 1500);
+          })
+        }else{
+          this.errorMessage = "请输入正确的手机号和验证码";
           this.errorTip = true;
           window.setTimeout(() => {
             this.errorTip = false;
-            this.$router.push(`/shareLogin?intervalCode=${this.intervalCode}`)
           }, 1500);
-        })
+        }
+        
       },
       //自动登录+重定向兑吧
       loginBar(userId, token) {
@@ -212,6 +233,21 @@
           color: #333333;
           font-weight bold
         }
+        input:
+        
+        :-webkit-outer-spin-button {
+          -webkit-appearance: none;
+        }
+        input:
+        
+        :-webkit-inner-spin-button {
+          -webkit-appearance: none;
+        }
+        
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+        
         input:
         
         :-webkit-input-placeholder {
