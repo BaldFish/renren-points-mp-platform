@@ -4,29 +4,29 @@
       <img src="../../common/images/bj_share_text.png" alt="">
     </div>
     <div class="btn">
-      <img src="../../common/images/invite.png" alt="">
+      <img src="../../common/images/invite.png" alt="" @click="turnShareHint">
     </div>
     <div class="title_wrap">我的奖励</div>
     <div class="rewards_out">
       <div class="rewards_in">
         <div class="in_left">
           <div class="in_left_top">已获得奖励</div>
-          <div class="in_left_bottom">100</div>
+          <div class="in_left_bottom">{{reward.award_value}}</div>
         </div>
         <div class="in_middle"></div>
         <div class="in_right">
           <div class="in_right_top">已邀请好友</div>
-          <div class="in_right_bottom">4</div>
+          <div class="in_right_bottom">{{reward.invite_count}}</div>
         </div>
       </div>
     </div>
     <div class="title_wrap">奖励排行</div>
     <div class="rewards_out swiper_out">
       <div class="rewards_in">
-        <div class="case_wrap">
-          <swiper :options="caseOption" class="case_swiper" ref="caseOption">
-            <swiper-slide v-for="(slide, index) in caseOption.slides" :key="index" v-if="caseOption.slides.length">
-              <img src="../../common/images/tongzhi.png" alt="">用户：{{slide.name}} 刚刚获得<span>{{slide.num}}</span>积分奖励
+        <div class="rank_wrap">
+          <swiper :options="rankOption" class="rank_swiper" ref="rankOption">
+            <swiper-slide v-for="(item, index) in rankList" :key="index">
+              <img src="../../common/images/tongzhi.png" alt="">用户：{{item.nickname}} 刚刚获得<span>{{item.value}}</span>积分奖励
             </swiper-slide>
             <!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
           </swiper>
@@ -68,44 +68,95 @@
     components: {},
     data() {
       return {
-        caseOption: {
-          pagination: {
-            el: '.swiper-pagination'
-          },
-          slides: [{
-            name: "张三",
-            num: "60"
-          },
-            {
-              name: "李四",
-              num: "50"
-            },
-            {
-              name: "王五",
-              num: "40"
-            }],
+        token: "",
+        userId: "",
+        phone: "",
+        rankList:[],
+        rankOption: {
+          init:false,
+          loop: true,
           autoplay: {
             delay: 5000,
             stopOnLastSlide: false,
             disableOnInteraction: false,
           },
-          loop: true,
+          effect: 'slide',
           direction: 'vertical',
-          effect: '',
-          slidesPerView: 3,
+          slidesPerView : 3,
         },
+        reward: {
+          award_value:0,
+          invite_count:0
+        },
+        shareTitle:"人人积分商城",
+        shareDesc:"邀新人注册赚积分，换好礼",
+        shareUrl:``,
+        shareImg:location.origin+"/static/images/share.jpg",
       }
     },
     created() {
     },
     beforeMount() {
       this.$utils.setTitle("邀新人注册");
+      this.token = this.$utils.getCookie("token");
+      this.userId = this.$utils.getCookie("user_id");
+      this.phone = this.$utils.getCookie("phone");
+      this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
+      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
+      if (this.token && this.userId) {
+        this.getReward();
+        this.getRewardRank();
+      } else {
+        this.$router.push("/login");
+      }
+      
     },
     mounted() {
+      this.getReward();
+      this.getRewardRank();
+    },
+    updated(){
+      if (this.rankList.length>0) {
+        this.rankDom.init();
+      }
     },
     watch: {},
-    computed: {},
-    methods: {},
+    computed: {
+      rankDom:function() {
+        return this.$refs.rankOption.swiper;
+      }
+    },
+    methods: {
+      //跳转分享提示页
+      turnShareHint() {
+        this.$router.push("/shareHint")
+      },
+      //获取用户邀请奖励
+      getReward() {
+        this.$axios({
+          method: "GET",
+          url: `${this.$baseURL}/v1/rr-points/user/reward/${this.userId}`,
+          headers: {
+            'X-Access-Token': this.token,
+          }
+        }).then(res => {
+          this.reward = res.data.data
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+      //获取奖励排行
+      getRewardRank() {
+        this.$axios({
+          method: "GET",
+          url: `${this.$baseURL}/v1/rr-points/user/rank/reward`,
+        }).then(res => {
+          this.rankList = res.data.data;
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+    },
   }
 </script>
 
@@ -258,24 +309,29 @@
         padding-bottom 10px
         justify-content left
         
-        .case_wrap {
+        .rank_wrap {
           height 126px
           position relative
           
-          .case_swiper {
+          .rank_swiper {
             height 126px
             line-height 42px
+            
             .swiper-wrapper {
               height 42px
               line-height 42px
               font-size 24px
               color: #666666;
+              
               img {
+                width 24px
+                height 24px
                 vertical-align middle
                 margin-left 36px
                 margin-right 20px
               }
-              span{
+              
+              span {
                 color: #333333;
               }
             }

@@ -1,7 +1,7 @@
 <template>
   <div class="shareHint">
     <div class="btn">
-      <img src="../../common/images/cancel.png" alt="">
+      <img src="../../common/images/cancel.png" alt="" @click="turnShare">
     </div>
   </div>
 </template>
@@ -11,18 +11,31 @@
     name: "shareHint",
     components: {},
     data() {
-      return {}
+      return {
+        shareTitle:"人人积分商城",
+        shareDesc:"邀新人注册赚积分，换好礼",
+        shareUrl:``,
+        shareImg:location.origin+"/static/images/share.jpg",
+        userId:"",
+      }
     },
     created() {
     },
     beforeMount() {
       this.$utils.setTitle("邀新人注册");
+      this.userId=this.$utils.getCookie("user_id");
+      this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
+      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
     },
     mounted() {
     },
     watch: {},
     computed: {},
-    methods: {},
+    methods: {
+      turnShare(){
+        this.$router.push("/share")
+      }
+    },
   }
 </script>
 
@@ -38,8 +51,10 @@
     .btn{
       width 220px
       height 70px
-      background: url(../../common/images/cancel.png) center center no-repeat
-      background-size: 100% 100%;
+      img{
+        width 100%
+        height 100%
+      }
     }
   }
 </style>
