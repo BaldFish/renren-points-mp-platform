@@ -88,6 +88,10 @@
           award_value:0,
           invite_count:0
         },
+        shareTitle:"人人积分商城",
+        shareDesc:"邀新人注册赚积分，换好礼",
+        shareUrl:``,
+        shareImg:location.origin+"/static/images/share.jpg",
       }
     },
     created() {
@@ -97,6 +101,8 @@
       this.token = this.$utils.getCookie("token");
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
+      this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
+      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
       if (this.token && this.userId) {
         this.getReward();
         this.getRewardRank();

@@ -40,7 +40,11 @@
         getCheckTime: 0,
         errorTip: false,
         errorMessage: "",
-        invitationCode: ""
+        invitationCode: "",
+        shareTitle:"人人积分商城",
+        shareDesc:"邀新人注册赚积分，换好礼",
+        shareUrl:``,
+        shareImg:location.origin+"/static/images/share.jpg",
       }
     },
     created() {
@@ -50,6 +54,8 @@
       this.token = this.$utils.getCookie("token");
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
+      this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
+      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
       this.invitationCode = this.$utils.getParameter("invitationCode");
       this.WXcode = this.$utils.getParameter('code');
       if (this.WXcode === null || this.WXcode === "") {

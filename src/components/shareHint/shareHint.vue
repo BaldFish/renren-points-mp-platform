@@ -12,10 +12,10 @@
     components: {},
     data() {
       return {
-        shareTitle:"邀新人注册",
-        shareDesc:"邀新人注册",
+        shareTitle:"人人积分商城",
+        shareDesc:"邀新人注册赚积分，换好礼",
         shareUrl:``,
-        shareImg:location.origin+"/static/images/fxchk.jpg",
+        shareImg:location.origin+"/static/images/share.jpg",
         userId:"",
       }
     },
