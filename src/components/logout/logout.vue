@@ -23,7 +23,7 @@
     created() {
     },
     beforeMount() {
-      if (!this.$utils.getCookie("token")) {
+      if (!window.localStorage.getItem('token')) {
         this.$router.push("/login")
       }
     },
@@ -34,7 +34,7 @@
     methods: {
       //注销登录
       logout() {
-        let token = this.$utils.getCookie("token");
+        let token = window.localStorage.getItem('token');
         this.$axios({
           method: 'DELETE',
           url: `${this.$baseURL}/v1/rr-points/user/signout/${token}`,
@@ -42,13 +42,13 @@
             'X-Access-Token': token,
           }
         }).then(res => {
-          this.$utils.unsetCookie('session_id');
-          this.$utils.unsetCookie('token');
-          this.$utils.unsetCookie('user_id');
-          this.$utils.unsetCookie('phone');
-          this.$utils.unsetCookie('head_img');
-          this.$utils.unsetCookie('nick_name');
-          this.$utils.unsetCookie('openid');
+          localStorage.removeItem('session_id');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('phone');
+          localStorage.removeItem('head_img');
+          localStorage.removeItem('nick_name');
+          localStorage.removeItem('openid');
           this.errorMessage = "注销成功！";
           this.errorTip = true;
           window.setTimeout(() => {
@@ -56,13 +56,13 @@
             this.$router.push("/login")
           }, 1500)
         }).catch(error => {
-          this.$utils.unsetCookie('session_id');
-          this.$utils.unsetCookie('token');
-          this.$utils.unsetCookie('user_id');
-          this.$utils.unsetCookie('phone');
-          this.$utils.unsetCookie('head_img');
-          this.$utils.unsetCookie('nick_name');
-          this.$utils.unsetCookie('openid');
+          localStorage.removeItem('session_id');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('phone');
+          localStorage.removeItem('head_img');
+          localStorage.removeItem('nick_name');
+          localStorage.removeItem('openid');
           this.errorMessage = "注销成功！";
           this.errorTip = true;
           window.setTimeout(() => {

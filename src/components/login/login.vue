@@ -84,9 +84,9 @@
     created() {
     },
     beforeMount() {
-      this.token = this.$utils.getCookie("token");
-      this.userId = this.$utils.getCookie("user_id");
-      this.phone = this.$utils.getCookie("phone");
+      this.token = window.localStorage.getItem('token');
+      this.userId = window.localStorage.getItem('user_id');
+      this.phone = window.localStorage.getItem('phone');
       if (this.getParameter('phone')) {
         this.isHide = true;
         let phone = this.getParameter('phone');
@@ -175,22 +175,22 @@
           url: `${this.$baseURL}/v1/rr-points/user/login`,
           data: this.$querystring.stringify(loginFormData)
         }).then(res => {
-          this.$utils.setCookie('session_id', res.data.data.session_id);
-          this.$utils.setCookie('token', res.data.data.token);
-          this.$utils.setCookie('user_id', res.data.data.user_id);
-          this.$utils.setCookie('phone', res.data.data.phone);
-          this.$utils.setCookie('head_img', res.data.data.head_img);
-          this.$utils.setCookie('nick_name', res.data.data.nick_name);
-          this.$utils.setCookie('openid', res.data.data.openid);
+          window.localStorage.setItem('session_id', res.data.data.session_id);
+          window.localStorage.setItem('token', res.data.data.token);
+          window.localStorage.setItem('user_id', res.data.data.user_id);
+          window.localStorage.setItem('phone', res.data.data.phone);
+          window.localStorage.setItem('head_img', res.data.data.head_img);
+          window.localStorage.setItem('nick_name', res.data.data.nick_name);
+          window.localStorage.setItem('openid', res.data.data.openid);
           this.loginBar(res.data.data.user_id, res.data.data.token)
         }).catch(error => {
-          this.$utils.unsetCookie('session_id');
-          this.$utils.unsetCookie('token');
-          this.$utils.unsetCookie('user_id');
-          this.$utils.unsetCookie('phone');
-          this.$utils.unsetCookie('head_img');
-          this.$utils.unsetCookie('nick_name');
-          this.$utils.unsetCookie('openid');
+          localStorage.removeItem('session_id');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('phone');
+          localStorage.removeItem('head_img');
+          localStorage.removeItem('nick_name');
+          localStorage.removeItem('openid');
           this.$Indicator.close();
           this.errorMessage = error.response.data.message;
           this.errorTip = true;
@@ -216,13 +216,13 @@
           this.$Indicator.close();
           window.location.href = res.data.url
         }).catch(error => {
-          this.$utils.unsetCookie('session_id');
-          this.$utils.unsetCookie('token');
-          this.$utils.unsetCookie('user_id');
-          this.$utils.unsetCookie('phone');
-          this.$utils.unsetCookie('head_img');
-          this.$utils.unsetCookie('nick_name');
-          this.$utils.unsetCookie('openid');
+          localStorage.removeItem('session_id');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('phone');
+          localStorage.removeItem('head_img');
+          localStorage.removeItem('nick_name');
+          localStorage.removeItem('openid');
           this.$Indicator.close();
           this.$router.push('/login');
         })
@@ -243,22 +243,22 @@
           url: `${this.$baseURL}/v1/rr-points/user/login`,
           data: this.$querystring.stringify(data)
         }).then(res => {
-          this.$utils.setCookie('session_id', res.data.data.session_id);
-          this.$utils.setCookie('token', res.data.data.token);
-          this.$utils.setCookie('user_id', res.data.data.user_id);
-          this.$utils.setCookie('phone', res.data.data.phone);
-          this.$utils.setCookie('head_img', res.data.data.head_img);
-          this.$utils.setCookie('nick_name', res.data.data.nick_name);
-          this.$utils.setCookie('openid', res.data.data.openid);
+          window.localStorage.setItem('session_id', res.data.data.session_id);
+          window.localStorage.setItem('token', res.data.data.token);
+          window.localStorage.setItem('user_id', res.data.data.user_id);
+          window.localStorage.setItem('phone', res.data.data.phone);
+          window.localStorage.setItem('head_img', res.data.data.head_img);
+          window.localStorage.setItem('nick_name', res.data.data.nick_name);
+          window.localStorage.setItem('openid', res.data.data.openid);
           this.loginBar(res.data.data.user_id, res.data.data.token)
         }).catch(error => {
-          this.$utils.unsetCookie('session_id');
-          this.$utils.unsetCookie('token');
-          this.$utils.unsetCookie('user_id');
-          this.$utils.unsetCookie('phone');
-          this.$utils.unsetCookie('head_img');
-          this.$utils.unsetCookie('nick_name');
-          this.$utils.unsetCookie('openid');
+          localStorage.removeItem('session_id');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('phone');
+          localStorage.removeItem('head_img');
+          localStorage.removeItem('nick_name');
+          localStorage.removeItem('openid');
           this.$router.push('/login');
         })
       },

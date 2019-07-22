@@ -97,10 +97,10 @@
     created() {
     },
     beforeMount() {
+      this.token = window.localStorage.getItem('token');
+      this.userId = window.localStorage.getItem('user_id');
+      this.phone = window.localStorage.getItem('phone');
       this.$utils.setTitle("邀新人注册");
-      this.token = this.$utils.getCookie("token");
-      this.userId = this.$utils.getCookie("user_id");
-      this.phone = this.$utils.getCookie("phone");
       this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
       this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
       if (this.token && this.userId) {

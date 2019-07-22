@@ -22,8 +22,8 @@
     created() {
     },
     beforeMount() {
+      this.userId = window.localStorage.getItem('user_id');
       this.$utils.setTitle("邀新人注册");
-      this.userId=this.$utils.getCookie("user_id");
       this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
       this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
     },
