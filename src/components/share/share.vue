@@ -97,12 +97,12 @@
       this.token = this.$utils.getCookie("token");
       this.userId = this.$utils.getCookie("user_id");
       this.phone = this.$utils.getCookie("phone");
-      // if (this.token && this.userId) {
-      //   this.getReward();
-      //   this.getRewardRank();
-      // } else {
-      //   this.$router.push("/login");
-      // }
+      if (this.token && this.userId) {
+        this.getReward();
+        this.getRewardRank();
+      } else {
+        this.$router.push("/login");
+      }
       
     },
     mounted() {

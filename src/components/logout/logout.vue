@@ -85,7 +85,7 @@
     -moz-flex 1
     -webkit-flex 1
     flex 1
-    background url("../../common/images/bj.jpg") no-repeat center
+    background url("../../common/images/bj_logOff.jpg") no-repeat center
     background-attachment fixed
     -o-background-size 100% 100%
     -moz-background-size 100% 100%
