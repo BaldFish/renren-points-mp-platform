@@ -23,9 +23,9 @@
     created() {
     },
     beforeMount() {
-      // if (!window.localStorage.getItem('token')) {
-      //   this.$router.push("/login")
-      // }
+      if (!window.localStorage.getItem('token')) {
+        this.$router.push("/login")
+      }
     },
     mounted() {
     },

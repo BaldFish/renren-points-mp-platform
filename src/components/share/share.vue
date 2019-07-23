@@ -28,7 +28,7 @@
             <swiper-slide v-for="(item, index) in rankList" :key="index">
               <img src="../../common/images/tongzhi.png" alt="">用户：{{item.nickname}} 刚刚获得<span>{{item.value}}</span>积分奖励
             </swiper-slide>
-            <!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
+<!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
           </swiper>
         </div>
       </div>

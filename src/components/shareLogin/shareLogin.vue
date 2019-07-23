@@ -6,7 +6,7 @@
         <input type="text" autocomplete="off" v-model="phone" placeholder="请输入您的手机号" maxlength="11">
       </div>
       <div class="code_wrap">
-        <input type="text" autocomplete="off" v-model="code" placeholder="请输入您的验证码" maxlength="4">
+        <input type="text" autocomplete="off" v-model="code" placeholder="请输入您的验证码" maxlength="4" ref="ipt" :disabled="disabled">
         <span class="send" v-show="getCheckTime <= 0" @click="sendCodeTime">发送验证码</span>
         <span class="time" v-show="getCheckTime > 0">{{getCheckTime}}s后重发</span>
       </div>
@@ -32,6 +32,7 @@
     components: {},
     data() {
       return {
+        disabled: true,
         isHide: false,
         token: "",
         userId: "",
@@ -41,10 +42,10 @@
         errorTip: false,
         errorMessage: "",
         invitationCode: "",
-        shareTitle:"人人积分商城",
-        shareDesc:"邀新人注册赚积分，换好礼",
-        shareUrl:location.origin+`/shareLogin?invitationCode=${this.userId}`,
-        shareImg:location.origin+"/static/images/share_logo.png",
+        shareTitle: "人人积分商城",
+        shareDesc: "邀新人注册赚积分，换好礼",
+        shareUrl: location.origin + `/shareLogin?invitationCode=${this.userId}`,
+        shareImg: location.origin + "/static/images/share_logo.png",
       }
     },
     created() {
@@ -54,8 +55,8 @@
       this.userId = window.localStorage.getItem('user_id');
       this.phone = window.localStorage.getItem('phone');
       this.$utils.setTitle("新人注册");
-      this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
-      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
+      this.shareUrl = location.origin + `/shareLogin?invitationCode=${this.userId}`;
+      this.$wxShare.wxShare(this, this.shareTitle, this.shareDesc, this.shareUrl, this.shareImg);
       this.invitationCode = this.$utils.getParameter("invitationCode");
       this.WXcode = this.$utils.getParameter('code');
       if (this.WXcode === null || this.WXcode === "") {
@@ -69,12 +70,12 @@
     },
     watch: {
       phone: function (val) {
-        if (this.phone&&!/^[0-9]+$/.test(val)) {
+        if (this.phone && !/^[1]$|^[1][3,4,5,7,8,9]$|^[1][3,4,5,7,8,9]|^[1][3,4,5,7,8,9][0-9]{9}$/.test(val)) {
           this.phone = this.phone.slice(0, this.phone.length - 1)
         }
       },
-      code:function (val) {
-        if (this.code&&!/^[0-9]+$/.test(val)) {
+      code: function (val) {
+        if (this.code && !/^[0-9]+$/.test(val)) {
           this.code = this.code.slice(0, this.code.length - 1)
         }
       }
@@ -84,6 +85,7 @@
       //发送验证码
       sendCodeTime() {
         if (this.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone)) {
+          this.disabled = false;
           // 开始倒计时
           this.getCheckTime = 60;
           this.intervalCode = setInterval(() => {
@@ -104,6 +106,12 @@
           }).catch(error => {
             console.log(error);
           })
+        } else if (!this.phone) {
+          this.errorMessage = "请输入您的手机号";
+          this.errorTip = true;
+          window.setTimeout(() => {
+            this.errorTip = false;
+          }, 1500);
         } else {
           this.errorMessage = "请输入正确的手机号";
           this.errorTip = true;
@@ -114,7 +122,7 @@
       },
       //免密注册登录
       login() {
-        if(this.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone)&&this.code&&/^[0-9]{4}$/.test(this.code)){
+        if (this.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone) && this.code && /^[0-9]{4}$/.test(this.code)) {
           let loginFormData = {
             phone: this.phone,//手机号
             code: this.code,//短信验证码
@@ -156,7 +164,31 @@
               this.$router.push(`/shareLogin?intervalCode=${this.intervalCode}`)
             }, 1500);
           })
-        }else{
+        } else if (!this.phone) {
+          this.errorMessage = "请输入您的手机号";
+          this.errorTip = true;
+          window.setTimeout(() => {
+            this.errorTip = false;
+          }, 1500);
+        } else if (!/^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone)) {
+          this.errorMessage = "请输入正确的手机号";
+          this.errorTip = true;
+          window.setTimeout(() => {
+            this.errorTip = false;
+          }, 1500);
+        } else if (!this.code) {
+          this.errorMessage = "请输入您的验证码";
+          this.errorTip = true;
+          window.setTimeout(() => {
+            this.errorTip = false;
+          }, 1500);
+        } else if (!/^[0-9]{4}$/.test(this.code)) {
+          this.errorMessage = "请输入正确的验证码";
+          this.errorTip = true;
+          window.setTimeout(() => {
+            this.errorTip = false;
+          }, 1500);
+        } else {
           this.errorMessage = "请输入正确的手机号和验证码";
           this.errorTip = true;
           window.setTimeout(() => {
@@ -296,6 +328,13 @@
           color: #333333;
           padding-left 22px
           padding-right 22px
+        }
+        
+        input[disabled], input:disabled, input.disabled {
+          -webkit-text-fill-color: #999999;
+          -webkit-opacity: 1;
+          opacity: 1;
+          background-color #ffffff
         }
         input:
         
