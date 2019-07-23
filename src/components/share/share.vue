@@ -90,12 +90,11 @@
         },
         shareTitle:"人人积分商城",
         shareDesc:"邀新人注册赚积分，换好礼",
-        shareUrl:``,
+        shareUrl:location.origin+`/shareLogin?invitationCode=${this.userId}`,
         shareImg:location.origin+"/static/images/share_logo.jpg",
       }
     },
     created() {
-      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
     },
     beforeMount() {
       this.token = window.localStorage.getItem('token');
@@ -103,7 +102,7 @@
       this.phone = window.localStorage.getItem('phone');
       this.$utils.setTitle("邀新人注册");
       this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
-      
+      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
       if (this.token && this.userId) {
         this.getReward();
         this.getRewardRank();
