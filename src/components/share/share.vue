@@ -39,7 +39,7 @@
         <ul>
           <li>
             <span class="dot"></span>
-            <span class="text">活动时间：2019年7月02日10:00:00-7月28日 23:59:59 ；</span>
+            <span class="text">活动时间：2019年7月23日 15:00:00-2019年8月6日 15:00:00 ；</span>
           </li>
           <li>
             <span class="dot"></span>
