@@ -91,7 +91,7 @@
         shareTitle:"人人积分商城",
         shareDesc:"邀新人注册赚积分，换好礼",
         shareUrl:``,
-        shareImg:location.origin+"/static/images/share.jpg",
+        shareImg:location.origin+"/static/images/share_logo.jpg",
       }
     },
     created() {
