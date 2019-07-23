@@ -95,6 +95,7 @@
       }
     },
     created() {
+      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
     },
     beforeMount() {
       this.token = window.localStorage.getItem('token');
@@ -102,7 +103,7 @@
       this.phone = window.localStorage.getItem('phone');
       this.$utils.setTitle("邀新人注册");
       this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
-      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
+      
       if (this.token && this.userId) {
         this.getReward();
         this.getRewardRank();
