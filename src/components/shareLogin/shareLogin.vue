@@ -66,7 +66,11 @@
       }
     },
     mounted() {
-    
+      
+      alert(this.userId)
+      alert(this.shareUrl)
+      alert(this.invitationCode)
+
     },
     watch: {
       phone: function (val) {
@@ -195,7 +199,7 @@
             this.errorTip = false;
           }, 1500);
         }
-        
+
       },
       //自动登录+重定向兑吧
       loginBar(userId, token) {
@@ -232,7 +236,7 @@
   .hide {
     visibility hidden
   }
-  
+
   .shareLogin {
     box-sizing border-box
     width 750px
@@ -240,7 +244,7 @@
     background-size: 100% 100%;
     padding-top 70px
     padding-bottom 107px
-    
+
     .login_wrap {
       width: 670px;
       height: 580px;
@@ -250,19 +254,19 @@
       border-radius: 30px;
       margin-bottom 58px
       padding 58px 74px
-      
+
       .login_title {
         font-size: 50px;
         line-height: 50px;
         color: #333333;
         margin-bottom 40px
       }
-      
+
       .phone_wrap {
         width: 520px;
         height 102px
         border-bottom: solid 1px #bfbfbf; /*no*/
-        
+
         input {
           width: 520px;
           height 100px
@@ -272,48 +276,48 @@
           font-weight bold
         }
         input:
-        
+
         :-webkit-outer-spin-button {
           -webkit-appearance: none;
         }
         input:
-        
+
         :-webkit-inner-spin-button {
           -webkit-appearance: none;
         }
-        
+
         input[type="number"] {
           -moz-appearance: textfield;
         }
-        
+
         input:
-        
+
         :-webkit-input-placeholder {
           color #999999;
           font-weight normal
         }
         input:
-        
+
         :-moz-placeholder {
           color #999999;
           font-weight normal
         }
-        
+
         input:
-        
+
         :-moz-placeholder {
           color #999999;
           font-weight normal
         }
-        
+
         input:
-        
+
         :-ms-input-placeholder {
           color #999999;
           font-weight normal
         }
       }
-      
+
       .code_wrap {
         width: 520px;
         height 102px
@@ -321,7 +325,7 @@
         display flex
         align-items center
         justify-content space-between
-        
+
         input {
           width 320px
           font-size: 28px;
@@ -329,7 +333,7 @@
           padding-left 22px
           padding-right 22px
         }
-        
+
         input[disabled], input:disabled, input.disabled {
           -webkit-text-fill-color: #999999;
           -webkit-opacity: 1;
@@ -337,28 +341,28 @@
           background-color #ffffff
         }
         input:
-        
+
         :-webkit-input-placeholder {
           color #999999;
         }
         input:
-        
+
         :-moz-placeholder {
           color #999999;
         }
-        
+
         input:
-        
+
         :-moz-placeholder {
           color #999999;
         }
-        
+
         input:
-        
+
         :-ms-input-placeholder {
           color #999999;
         }
-        
+
         .send {
           font-size 24px
           width: 160px;
@@ -369,7 +373,7 @@
           text-align center
           color: #386cff;
         }
-        
+
         .time {
           font-size 24px
           width: 160px;
@@ -380,9 +384,9 @@
           text-align center
           color: #999999;
         }
-        
+
       }
-      
+
       .login_btn {
         width: 520px;
         height: 80px;
@@ -395,9 +399,9 @@
         text-align center
         margin-top 90px
       }
-      
+
     }
-    
+
     .login_tips {
       width: 670px;
       height: 410px;
@@ -406,22 +410,22 @@
       box-shadow: 0px 0px 19px 5px rgba(0, 4, 56, 0.18);
       border-radius: 30px;
       padding-top 34px
-      
+
       h2 {
         text-align center
         font-size: 33px;
         color: #222222;
         font-weight bold
-        
+
         span {
           font-size: 72px;
           color: #386cff;
         }
       }
-      
+
       ul {
         padding 48px 54px
-        
+
         li {
           font-size: 24px;
           font-weight: normal;
@@ -429,7 +433,7 @@
           color: #333333;
           text-indent 48px
           line-height 30px
-          
+
           span {
             font-size: 24px;
             color: #222222;
@@ -438,7 +442,7 @@
         }
       }
     }
-    
+
     .errorTip_wrap {
       width 100%
       height 100%
@@ -448,7 +452,7 @@
       display flex
       align-items center
       justify-content center
-      
+
       .errorTip {
         line-height 1.6
         max-width 520px;
