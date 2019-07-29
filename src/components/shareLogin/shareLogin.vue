@@ -66,7 +66,7 @@
       }
     },
     mounted() {
-      
+
       alert(this.userId)
       alert(this.shareUrl)
       alert(this.invitationCode)
@@ -126,6 +126,7 @@
       },
       //免密注册登录
       login() {
+        alert(this.intervalCode)
         if (this.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone) && this.code && /^[0-9]{4}$/.test(this.code)) {
           let loginFormData = {
             phone: this.phone,//手机号
@@ -139,6 +140,11 @@
             text: '登录中...',
             spinnerType: 'triple-bounce'
           });
+
+
+          alert(this.intervalCode)
+          alert(`${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.intervalCode}`)
+
           this.$axios({
             method: 'POST',
             url: `${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.intervalCode}`,
