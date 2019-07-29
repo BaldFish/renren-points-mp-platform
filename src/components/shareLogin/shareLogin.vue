@@ -126,7 +126,7 @@
       },
       //免密注册登录
       login() {
-        alert(this.intervalCode)
+        alert(this.invitationCode)
         if (this.phone && /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone) && this.code && /^[0-9]{4}$/.test(this.code)) {
           let loginFormData = {
             phone: this.phone,//手机号
@@ -142,12 +142,12 @@
           });
 
 
-          alert(this.intervalCode)
-          alert(`${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.intervalCode}`)
+
+          alert(`${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.invitationCode}`)
 
           this.$axios({
             method: 'POST',
-            url: `${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.intervalCode}`,
+            url: `${this.$baseURL}/v1/rr-points/user/login?invitation_code=${this.invitationCode}`,
             data: this.$querystring.stringify(loginFormData)
           }).then(res => {
             window.localStorage.setItem('session_id', res.data.data.session_id);
@@ -171,7 +171,7 @@
             this.errorTip = true;
             window.setTimeout(() => {
               this.errorTip = false;
-              this.$router.push(`/shareLogin?intervalCode=${this.intervalCode}`)
+              this.$router.push(`/shareLogin?invitationCode=${this.invitationCode}`)
             }, 1500);
           })
         } else if (!this.phone) {
