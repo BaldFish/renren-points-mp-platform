@@ -28,7 +28,7 @@
             <swiper-slide v-for="(item, index) in rankList" :key="index">
               <img src="../../common/images/tongzhi.png" alt="">用户：{{item.nickname}} 刚刚获得<span>{{item.value}}</span>积分奖励
             </swiper-slide>
-<!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
+            <!--            <div class="swiper-pagination" slot="pagination" v-if="caseOption.slides.length>1"></div>-->
           </swiper>
         </div>
       </div>
@@ -71,9 +71,9 @@
         token: "",
         userId: "",
         phone: "",
-        rankList:[],
+        rankList: [],
         rankOption: {
-          init:false,
+          init: false,
           loop: true,
           autoplay: {
             delay: 5000,
@@ -82,16 +82,16 @@
           },
           effect: 'slide',
           direction: 'vertical',
-          slidesPerView : 3,
+          slidesPerView: 3,
         },
         reward: {
-          award_value:0,
-          invite_count:0
+          award_value: 0,
+          invite_count: 0
         },
-        shareTitle:"人人积分商城",
-        shareDesc:"邀新人注册赚积分，换好礼",
-        shareUrl:location.origin+`/shareLogin?invitationCode=${this.userId}`,
-        shareImg:location.origin+"/static/images/share_logo.png",
+        shareTitle: "人人积分商城",
+        shareDesc: "邀新人注册赚积分，换好礼",
+        shareUrl: location.origin + `/shareLogin?invitationCode=${this.userId}`,
+        shareImg: location.origin + "/static/images/share_logo.png",
       }
     },
     created() {
@@ -101,28 +101,27 @@
       this.userId = window.localStorage.getItem('user_id');
       this.phone = window.localStorage.getItem('phone');
       this.$utils.setTitle("邀新人注册");
-      this.shareUrl=location.origin+`/shareLogin?invitationCode=${this.userId}`;
-      this.$wxShare.wxShare(this,this.shareTitle, this.shareDesc,this.shareUrl,this.shareImg);
-      if (this.token && this.userId) {
-        this.getReward();
-        this.getRewardRank();
-      } else {
-        this.$router.push("/login");
-      }
-      
+      this.shareUrl = location.origin + `/shareLogin?invitationCode=${this.userId}`;
+      this.$wxShare.wxShare(this, this.shareTitle, this.shareDesc, this.shareUrl, this.shareImg);
+      // if (this.token && this.userId) {
+      //   this.getReward();
+      //   this.getRewardRank();
+      // } else {
+      //   this.$router.push("/login");
+      // }
     },
     mounted() {
       this.getReward();
       this.getRewardRank();
     },
-    updated(){
-      if (this.rankList.length>0) {
+    updated() {
+      if (this.rankList.length > 0) {
         this.rankDom.init();
       }
     },
     watch: {},
     computed: {
-      rankDom:function() {
+      rankDom: function () {
         return this.$refs.rankOption.swiper;
       }
     },
