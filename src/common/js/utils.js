@@ -1,3 +1,5 @@
+import {deepClone} from "vant/es/utils/deep-clone";
+
 let utils = {
   /*  1
   函数，加法函数，用来得到精确的加法结果
@@ -238,6 +240,62 @@ let utils = {
         }
       }, 100)
     }, true)
+  },
+  /*14
+  函数：实现深拷贝
+  说明：保留继承关系，可以实现各种类型拷贝，实现递归拷贝
+  参数：
+  调用：
+  返回值：
+  */
+  deepClone: function (obj) {
+    if (typeof obj !== 'object'||typeof obj == 'null') {
+      return obj;
+    }
+    if (obj instanceof Date) {
+      return new Date(obj);
+    }
+    if (obj instanceof RegExp) {
+      return new RegExp(obj);
+    }
+    let o = new obj.constructor();//保留类的继承关系
+    for (let key in obj) {
+      o[key] = typeof obj[key] === 'object' ? utils.deepClone(obj[key]) : obj[key]
+    }
+    return o
+  },
+  /*15
+  函数：判断数据类型
+  说明：
+  参数：
+  调用：
+  返回值：
+  */
+  getType: function (obj) {
+    let type = typeof obj;
+    if (type != "object") {
+      return type;
+    }
+    return Object.prototype.toString.call(obj).replace(/^\[object (\S+)\]$/, '$1');
+  },
+  /*getType:function (obj){
+  let str = Object.prototype.toString.call(obj);
+  let map={
+    '[object Boolean]'  : 'boolean',
+    '[object Number]'   : 'number',
+    '[object String]'   : 'string',
+    '[object Function]' : 'function',
+    '[object Array]'    : 'array',
+    '[object Date]'     : 'date',
+    '[object RegExp]'   : 'regExp',
+    '[object Undefined]': 'undefined',
+    '[object Null]'     : 'null',
+    '[object Object]'   : 'object'
+  };
+  if(obj instanceof Element){ //判断是否是dom元素，如div等
+    return "element";
   }
+  return map[str];
+},*/
 };
 export default utils
