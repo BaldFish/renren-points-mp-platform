@@ -102,6 +102,18 @@
             this.turnAutoLogin();
           }
         }
+      } else if (this.getParameter('from') && this.getParameter('to')) {
+        if (this.token && this.userId) {
+          this.isHide = true;
+          this.loginZZ(this.userId, this.token)
+        }else {
+          this.WXcode = this.getParameter('code');
+          if (this.WXcode === null || this.WXcode === "") {
+            let AppId = "wxd182797f554d6b82";
+            let local = window.location.href;
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+          }
+        }
       } else {
         if (this.token && this.userId) {
           this.isHide = true;
@@ -182,7 +194,11 @@
           window.localStorage.setItem('head_img', res.data.data.head_img);
           window.localStorage.setItem('nick_name', res.data.data.nick_name);
           window.localStorage.setItem('openid', res.data.data.openid);
-          this.loginBar(res.data.data.user_id, res.data.data.token)
+          if(this.getParameter('from') && this.getParameter('to')){
+            this.loginZZ(res.data.data.user_id, res.data.data.token)
+          }else{
+            this.loginBar(res.data.data.user_id, res.data.data.token)
+          }
         }).catch(error => {
           localStorage.removeItem('session_id');
           localStorage.removeItem('token');
@@ -225,6 +241,33 @@
           localStorage.removeItem('openid');
           this.$Indicator.close();
           this.$router.push('/login');
+        })
+      },
+      //昭卓广告自动登录
+      loginZZ(userId, token) {
+        let dbredirect = "";
+        if (this.getParameter('dbredirect')) {
+          dbredirect = this.getParameter('dbredirect')
+        }
+        this.$axios({
+          method: 'GET',
+          url: `${this.$baseURL}/v1/ignite-adv/url/${userId}`,
+          headers: {
+            'X-Access-Token': token,
+          }
+        }).then(res => {
+          this.$Indicator.close();
+          window.location.href = res.data.url
+        }).catch(error => {
+          localStorage.removeItem('session_id');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('phone');
+          localStorage.removeItem('head_img');
+          localStorage.removeItem('nick_name');
+          localStorage.removeItem('openid');
+          this.$Indicator.close();
+          this.$router.push('/login?from=duiba&to=ignite');
         })
       },
       //外部公众号跳转至积分商城并自动登录
@@ -389,7 +432,7 @@
       display flex
       align-items center
       justify-content center
-    
+      
       .errorTip {
         line-height 1.6
         max-width 520px;
