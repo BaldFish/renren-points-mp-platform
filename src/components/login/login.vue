@@ -195,11 +195,14 @@
           window.localStorage.setItem('nick_name', res.data.data.nick_name);
           window.localStorage.setItem('openid', res.data.data.openid);
           if(this.getParameter('from') && this.getParameter('to')){
+            console.log(1)
             this.loginZZ(res.data.data.user_id, res.data.data.token)
           }else{
+            console.log(2)
             this.loginBar(res.data.data.user_id, res.data.data.token)
           }
         }).catch(error => {
+          console.log("error");
           localStorage.removeItem('session_id');
           localStorage.removeItem('token');
           localStorage.removeItem('user_id');
@@ -212,8 +215,11 @@
           this.errorTip = true;
           window.setTimeout(() => {
             this.errorTip = false;
-            
-            this.$router.push("/login")
+            if(this.getParameter('from') && this.getParameter('to')){
+              this.$router.push('/login?from=duiba&to=ignite');
+            }else{
+              this.$router.push("/login")
+            }
           }, 1500);
         })
       },
@@ -246,6 +252,7 @@
       },
       //昭卓广告自动登录
       loginZZ(userId, token) {
+        console.log("loginZZ");
         this.$axios({
           method: 'GET',
           url: `${this.$baseURL}/v1/ignite-adv/url/${userId}`,
@@ -255,7 +262,7 @@
         }).then(res => {
           this.$Indicator.close();
           console.log(res.data);
-          window.location.href = res.data.url
+          window.location.href = res.data.data.url
         }).catch(error => {
           localStorage.removeItem('session_id');
           localStorage.removeItem('token');
