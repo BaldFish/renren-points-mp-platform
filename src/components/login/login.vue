@@ -212,6 +212,7 @@
           this.errorTip = true;
           window.setTimeout(() => {
             this.errorTip = false;
+            
             this.$router.push("/login")
           }, 1500);
         })
@@ -245,10 +246,6 @@
       },
       //昭卓广告自动登录
       loginZZ(userId, token) {
-        let dbredirect = "";
-        if (this.getParameter('dbredirect')) {
-          dbredirect = this.getParameter('dbredirect')
-        }
         this.$axios({
           method: 'GET',
           url: `${this.$baseURL}/v1/ignite-adv/url/${userId}`,
@@ -257,6 +254,7 @@
           }
         }).then(res => {
           this.$Indicator.close();
+          console.log(res.data);
           window.location.href = res.data.url
         }).catch(error => {
           localStorage.removeItem('session_id');
